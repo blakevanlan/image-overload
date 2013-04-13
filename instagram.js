@@ -6,7 +6,7 @@ var request = require("request");
 var async = require("async");
 
 var image_count = 0;
-var NUM_IMAGES = 2000;
+var NUM_IMAGES = 1000;
 
 downloadImages = function (url, cb) {
    request({
@@ -16,7 +16,7 @@ downloadImages = function (url, cb) {
        if (err) throw err;
 
       var q = async.queue(function (data, callback) {
-         var stream = fs.createWriteStream(__dirname + "/images/" + data.name);
+         var stream = fs.createWriteStream(__dirname + "/instagram/" + data.name);
          stream.on("close", callback);
          request(data.images.standard_resolution.url).pipe(stream);
       }, 100);
@@ -49,6 +49,6 @@ downloadImages = function (url, cb) {
 };
 
 console.log("Starting...");
-downloadImages("https://api.instagram.com/v1/tags/college/media/recent?client_id=9dec1443eb1649208e384cbecebd8b9a", function () {
+downloadImages("https://api.instagram.com/v1/tags/clouds/media/recent?client_id=9dec1443eb1649208e384cbecebd8b9a", function () {
    process.exit();
 });
